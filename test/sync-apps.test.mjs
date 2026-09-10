@@ -32,6 +32,8 @@ const server = createServer((request, response) => {
     response.end(JSON.stringify({ tag_name: "v1.0.0" }));
   } else if (url.pathname === "/repos/SnisLab/app-example/commits/v1.0.0") {
     response.end(JSON.stringify({ sha }));
+  } else if (url.pathname === "/repos/SnisLab/app-example/commits/edge") {
+    response.end(JSON.stringify({ sha }));
   } else if (url.pathname === "/repos/SnisLab/app-example/commits/v2.0.0") {
     response.end(JSON.stringify({ sha: "ffffffffffffffffffffffffffffffffffffffff" }));
   } else if (url.pathname === `/repos/SnisLab/app-example/tarball/${sha}`) {
@@ -120,6 +122,26 @@ test("imports a dispatched app release from the repository root", async () => {
     const metadata = JSON.parse(await readFile(path.join(catalog, ".generated-apps.json"), "utf8"));
     assert.equal(metadata.apps.example.repository, "app-example");
     assert.equal(metadata.apps.example.sha, sha);
+  } finally {
+    await rm(catalog, { recursive: true, force: true });
+  }
+});
+
+test("imports an edge app dispatch with the edge image tag", async () => {
+  archive = await createArchive();
+  const catalog = await createCatalog();
+  try {
+    await runSync(catalog, {
+      repository: "app-example",
+      version: "1.0.0",
+      tag: "edge",
+      sha,
+      image: "ghcr.io/snislab/example:edge",
+    });
+
+    const metadata = JSON.parse(await readFile(path.join(catalog, ".generated-apps.json"), "utf8"));
+    assert.equal(metadata.apps.example.tag, "edge");
+    assert.equal(metadata.apps.example.image, "ghcr.io/snislab/example:edge");
   } finally {
     await rm(catalog, { recursive: true, force: true });
   }

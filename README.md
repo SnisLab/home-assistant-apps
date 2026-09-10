@@ -92,6 +92,19 @@ Der Dispatch muss diese Daten enthalten:
 }
 ```
 
+Für Edge-Builds kann derselbe Dispatch mit `tag: "edge"` und dem Edge-Image
+verwendet werden. Das App-Repository muss dafür einen `edge`-Ref besitzen:
+
+```json
+{
+  "repository": "app-example",
+  "version": "1.0.0",
+  "tag": "edge",
+  "sha": "0123456789abcdef0123456789abcdef01234567",
+  "image": "ghcr.io/snislab/example:edge"
+}
+```
+
 Ein Release-Workflow im `app-*`-Repository kann den Katalog so auslösen:
 
 ```yaml

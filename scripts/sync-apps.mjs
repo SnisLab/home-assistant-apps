@@ -236,14 +236,15 @@ async function prepareApp(source, temporaryRoot) {
       `${source.repository.full_name} config version ${config.version} does not match dispatch version ${source.version}.`,
     );
   }
-  if (source.tag && ![config.version, `v${config.version}`].includes(source.tag)) {
+  if (source.tag && source.tag !== "edge" && ![config.version, `v${config.version}`].includes(source.tag)) {
     throw new Error(`${source.repository.full_name} tag ${source.tag} does not match version ${config.version}.`);
   }
   if (config.image && !snisLabImagePattern.test(config.image)) {
     throw new Error(`${source.repository.full_name} must use a tagless lowercase image below ghcr.io/snislab/.`);
   }
   if (source.image) {
-    const expectedImage = `${config.image}:${config.version}`;
+    const imageTag = source.tag === "edge" ? "edge" : config.version;
+    const expectedImage = `${config.image}:${imageTag}`;
     if (source.image !== expectedImage) {
       throw new Error(
         `${source.repository.full_name} dispatch image ${source.image} does not match ${expectedImage}.`,
