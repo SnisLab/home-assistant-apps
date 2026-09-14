@@ -27,7 +27,7 @@ if (token) {
 
 async function githubFetch(endpoint, { allowNotFound = false } = {}) {
   const response = await fetch(`${apiUrl}${endpoint}`, { headers });
-  if (allowNotFound && response.status === 404) {
+  if (allowNotFound && [404, 422].includes(response.status)) {
     return undefined;
   }
   if (!response.ok) {
