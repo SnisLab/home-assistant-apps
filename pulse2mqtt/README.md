@@ -41,4 +41,5 @@ profiles, Energy Dashboard setup and troubleshooting notes.
 
 The application source and binary releases are maintained in
 [SnisLab/pulse2mqtt](https://github.com/SnisLab/pulse2mqtt). This repository
-only packages the released binaries as a Home Assistant app image.
+only packages the released binaries as a Home Assistant app image. The
+application changelog is imported automatically from the matching release.
