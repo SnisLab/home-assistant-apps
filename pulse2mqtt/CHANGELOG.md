@@ -1,3 +1,9 @@
+## 0.5.1.14
+
+### Fixed
+
+- fix: preserve pulse power scaling (8389b59)
+
 ## 0.5.0.13
 
 - ci: update changelog during releases (29a927b)
@@ -38,7 +44,6 @@
 ## 0.4.2
 
 - Handle invalid meter data safely without panicking.
-- Correct SML scaler handling for a zero scaler.
 
 ## 0.4.1
 
