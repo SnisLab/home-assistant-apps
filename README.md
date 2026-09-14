@@ -1,14 +1,38 @@
 # SnisLab Home Assistant Apps
 
-Dieses Repository ist der zentrale, öffentliche Katalog für die Home Assistant
-Apps von SnisLab. Die App-Verzeichnisse werden automatisch erzeugt und dürfen
-nicht direkt bearbeitet werden.
+Offizieller Katalog der Home Assistant Apps von SnisLab.
 
-## Repository In Home Assistant Hinzufügen
+Die Apps werden für Home Assistant bereitgestellt und automatisch aus den
+jeweiligen App-Repositories synchronisiert. Dieses Repository ist der stabile
+Kanal. Test- und Edge-Versionen werden getrennt davon bereitgestellt.
+
+## Installation
 
 1. **Einstellungen > Apps > App Store** öffnen.
-2. Die Verwaltung der Repositories öffnen.
-3. `https://github.com/SnisLab/home-assistant-apps` hinzufügen.
+2. **Repositories verwalten** öffnen.
+3. Dieses Repository hinzufügen:
+
+   `https://github.com/SnisLab/home-assistant-apps`
+
+4. Zum App Store zurückkehren und die gewünschte SnisLab-App installieren.
+
+## Updates
+
+Veröffentlichte Versionen werden automatisch in den Katalog übernommen. Danach
+erscheinen sie in Home Assistant als verfügbare App-Versionen.
+
+Beta- und Edge-Versionen gehören nicht zum stabilen Katalog. Sie werden in einem
+separaten Repository geführt, damit Testversionen keine stabile Installation
+ersetzen.
+
+## Dokumentation
+
+Die ausführliche Dokumentation zu einer App befindet sich im jeweiligen
+App-Repository in `DOCS.md`. Dort stehen unter anderem Konfiguration,
+Voraussetzungen, Fehlerbehebung und bekannte Einschränkungen.
+
+Dieses README enthält bewusst nur die Informationen, die beim Hinzufügen des
+Repositories in Home Assistant benötigt werden.
 
 ## Architektur
 
@@ -16,7 +40,7 @@ Die Verantwortlichkeiten bleiben getrennt:
 
 ```text
 SnisLab/<projekt>
-  -> Release und ghcr.io/snislab/<projekt>:<version>
+  -> Release und docker.io/dersni/<projekt>:<version>
   -> SnisLab/app-<projekt>
   -> SnisLab/home-assistant-apps/<projekt>
 ```
@@ -55,7 +79,7 @@ description: "Short description of the app"
 arch:
   - aarch64
   - amd64
-image: "ghcr.io/snislab/example"
+image: "docker.io/dersni/example"
 ```
 
 Der Katalog kopiert `app-example` automatisch nach `example/`. Home Assistant
@@ -87,7 +111,7 @@ Der Dispatch muss diese Daten enthalten:
     "version": "1.0.0",
     "tag": "v1.0.0",
     "sha": "0123456789abcdef0123456789abcdef01234567",
-    "image": "ghcr.io/snislab/example:1.0.0"
+    "image": "docker.io/dersni/example:1.0.0"
   }
 }
 ```
@@ -101,7 +125,7 @@ verwendet werden. Das App-Repository muss dafür einen `edge`-Ref besitzen:
   "version": "1.0.0",
   "tag": "edge",
   "sha": "0123456789abcdef0123456789abcdef01234567",
-  "image": "ghcr.io/snislab/example:edge"
+  "image": "docker.io/dersni/example:edge"
 }
 ```
 

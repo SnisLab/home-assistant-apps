@@ -36,6 +36,8 @@ const server = createServer((request, response) => {
     response.end(JSON.stringify({ sha }));
   } else if (url.pathname === "/repos/SnisLab/app-example/commits/v2.0.0") {
     response.end(JSON.stringify({ sha: "ffffffffffffffffffffffffffffffffffffffff" }));
+  } else if (url.pathname === `/repos/SnisLab/app-example/commits/${sha}`) {
+    response.end(JSON.stringify({ sha }));
   } else if (url.pathname === `/repos/SnisLab/app-example/tarball/${sha}`) {
     response.setHeader("Content-Type", "application/gzip");
     response.end(archive);
@@ -62,7 +64,7 @@ async function createArchive({ nestedConfig = false } = {}) {
       'description: "Example app"',
       "arch:",
       "  - amd64",
-      'image: "ghcr.io/snislab/example"',
+      'image: "docker.io/dersni/example"',
       "",
     ].join("\n"),
   );
@@ -114,7 +116,7 @@ test("imports a dispatched app release from the repository root", async () => {
       version: "1.0.0",
       tag: "v1.0.0",
       sha,
-      image: "ghcr.io/snislab/example:1.0.0",
+        image: "docker.io/dersni/example:1.0.0",
     });
 
     assert.match(await readFile(path.join(catalog, "example", "config.yaml"), "utf8"), /slug: "snislab_example"/);
@@ -136,12 +138,12 @@ test("imports an edge app dispatch with the edge image tag", async () => {
       version: "1.0.0",
       tag: "edge",
       sha,
-      image: "ghcr.io/snislab/example:edge",
+      image: "docker.io/dersni/example:edge",
     });
 
     const metadata = JSON.parse(await readFile(path.join(catalog, ".generated-apps.json"), "utf8"));
     assert.equal(metadata.apps.example.tag, "edge");
-    assert.equal(metadata.apps.example.image, "ghcr.io/snislab/example:edge");
+    assert.equal(metadata.apps.example.image, "docker.io/dersni/example:edge");
   } finally {
     await rm(catalog, { recursive: true, force: true });
   }
@@ -168,7 +170,7 @@ test("rejects nested app configurations", async () => {
         version: "1.0.0",
         tag: "v1.0.0",
         sha,
-        image: "ghcr.io/snislab/example:1.0.0",
+        image: "docker.io/dersni/example:1.0.0",
       }),
       /exactly one discoverable app configuration/,
     );
@@ -187,7 +189,7 @@ test("rejects a dispatch whose tag does not resolve to its SHA", async () => {
         version: "1.0.0",
         tag: "v2.0.0",
         sha,
-        image: "ghcr.io/snislab/example:1.0.0",
+      image: "docker.io/dersni/example:1.0.0",
       }),
       /does not resolve to client_payload.sha/,
     );
@@ -206,9 +208,9 @@ test("rejects a dispatch image that differs from config and version", async () =
         version: "1.0.0",
         tag: "v1.0.0",
         sha,
-        image: "ghcr.io/snislab/other:1.0.0",
+        image: "docker.io/dersni/other:1.0.0",
       }),
-      /does not match ghcr.io\/snislab\/example:1.0.0/,
+      /does not match docker.io\/dersni\/example:1.0.0/,
     );
   } finally {
     await rm(catalog, { recursive: true, force: true });

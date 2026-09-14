@@ -13,7 +13,7 @@ const repositoryPrefix = process.env.APP_REPOSITORY_PREFIX ?? "app-";
 const apiUrl = (process.env.GITHUB_API_URL ?? "https://api.github.com").replace(/\/$/, "");
 const token = process.env.GH_TOKEN ?? process.env.GITHUB_TOKEN;
 const metadataFile = path.join(root, ".generated-apps.json");
-const snisLabImagePattern = /^ghcr\.io\/snislab\/[a-z0-9]+(?:[._-][a-z0-9]+)*(?:\/[a-z0-9]+(?:[._-][a-z0-9]+)*)*$/;
+const snisLabImagePattern = /^docker\.io\/dersni\/[a-z0-9]+(?:[._-][a-z0-9]+)*(?:\/[a-z0-9]+(?:[._-][a-z0-9]+)*)*$/;
 
 const headers = {
   Accept: "application/vnd.github+json",
@@ -183,8 +183,16 @@ async function dispatchedApp() {
   if (repository.archived || repository.disabled) {
     throw new Error(`${repository.full_name} is not an active source repository.`);
   }
-  const tagSha = await resolveRef(repositoryName, tag);
-  if (tagSha !== sha) {
+  const tagResponse = await githubFetch(
+    `/repos/${organization}/${repositoryName}/commits/${encodeURIComponent(tag)}`,
+    { allowNotFound: true },
+  );
+  const resolvedSha = tagResponse
+    ? (await tagResponse.json()).sha
+    : (await (await githubFetch(`/repos/${organization}/${repositoryName}/commits/${sha}`, {
+        allowNotFound: true,
+      }))?.json())?.sha;
+  if (resolvedSha !== sha) {
     throw new Error(`client_payload.tag ${tag} does not resolve to client_payload.sha.`);
   }
 
@@ -240,7 +248,7 @@ async function prepareApp(source, temporaryRoot) {
     throw new Error(`${source.repository.full_name} tag ${source.tag} does not match version ${config.version}.`);
   }
   if (config.image && !snisLabImagePattern.test(config.image)) {
-    throw new Error(`${source.repository.full_name} must use a tagless lowercase image below ghcr.io/snislab/.`);
+    throw new Error(`${source.repository.full_name} must use a tagless lowercase image below docker.io/dersni/.`);
   }
   if (source.image) {
     const imageTag = source.tag === "edge" ? "edge" : config.version;

@@ -6,7 +6,7 @@ import YAML from "yaml";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const metadataFile = path.join(root, ".generated-apps.json");
 const requiredFields = ["name", "version", "slug", "description"];
-const snisLabImagePattern = /^ghcr\.io\/snislab\/[a-z0-9]+(?:[._-][a-z0-9]+)*(?:\/[a-z0-9]+(?:[._-][a-z0-9]+)*)*$/;
+const snisLabImagePattern = /^docker\.io\/dersni\/[a-z0-9]+(?:[._-][a-z0-9]+)*(?:\/[a-z0-9]+(?:[._-][a-z0-9]+)*)*$/;
 
 function parseYaml(contents, filename) {
   const document = YAML.parseDocument(contents, { uniqueKeys: true });
@@ -128,7 +128,7 @@ for (const directory of directories) {
       throw new Error(`${configFilename}: image must be a non-empty string.`);
     }
     if (!snisLabImagePattern.test(config.image)) {
-      throw new Error(`${configFilename}: image must be tagless, lowercase and below ghcr.io/snislab/.`);
+      throw new Error(`${configFilename}: image must be tagless, lowercase and below docker.io/dersni/.`);
     }
     if (source.image !== `${config.image}:${config.version}`) {
       throw new Error(`${configFilename}: generated image metadata does not match image and version.`);
