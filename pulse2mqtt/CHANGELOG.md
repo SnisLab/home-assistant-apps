@@ -1,3 +1,19 @@
+# Changelog
+
+## 0.5.3.15
+
+### Added
+
+- feat: detect Pulse API at startup (336c490)
+
+### Fixed
+
+- fix: raise Pulse probe failures (2fabf2e)
+- fix: cache detected Tibber endpoints (bb8d5ad)
+- fix: support new Tibber Pulse endpoints (2892f24)
+- fix: keep changelog heading at top (f4bce01)
+
+
 ## 0.5.1.14
 
 ### Fixed
@@ -10,8 +26,6 @@
 - docs: document 0.4 release history (f3b7758)
 - docs: complete release history (d106879)
 - docs: add project changelog (6de514e)
-
-# Changelog
 
 ## 0.5.0
 
