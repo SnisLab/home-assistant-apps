@@ -14,6 +14,9 @@ configuration:
   pulse_version:
     name: Pulse API version
     description: Select automatic detection, or choose the legacy or modern Pulse API endpoints.
+  verbose:
+    name: Verbose logging
+    description: Enable detailed logging for troubleshooting.
   battery_profile:
     name: Battery profile
     description: Voltage profile of the two installed AA cells. Regulated 1.5 V cells are represented as either 80% or 0%.

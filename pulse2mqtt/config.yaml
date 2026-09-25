@@ -1,5 +1,5 @@
 name: Pulse2MQTT
-version: "0.5.3.16"
+version: "0.5.3.17"
 slug: pulse2mqtt
 description: Read a Tibber Pulse and expose it as an MQTT device in Home Assistant
 url: https://github.com/SnisLab/app-pulse2mqtt
@@ -17,6 +17,7 @@ options:
   pulse_password: ""
   pulse_node: 1
   pulse_version: auto
+  verbose: false
   battery_profile: regulated_1_5v
   data_topic: pulse2mqtt/data
   metrics_topic: pulse2mqtt/metrics
@@ -29,6 +30,7 @@ schema:
   pulse_password: password
   pulse_node: int(1,)
   pulse_version: list(auto|legacy|modern)
+  verbose: bool
   battery_profile: list(alkaline|lfb_aa|nimh_1_2v|regulated_1_5v)
   data_topic: str
   metrics_topic: str

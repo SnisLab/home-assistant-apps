@@ -8,6 +8,7 @@ pulse_username="$(bashio::config 'pulse_username')"
 pulse_password="$(bashio::config 'pulse_password')"
 pulse_node="$(bashio::config 'pulse_node')"
 pulse_version="$(bashio::config 'pulse_version')"
+verbose="$(bashio::config 'verbose')"
 if [[ "${pulse_version}" == "auto" ]]; then
     pulse_version=""
 fi
@@ -82,4 +83,7 @@ jq -n \
     }' > /tmp/pulse2mqtt/settings.yaml
 
 bashio::log.info "Starting Pulse2MQTT"
+if [[ "${verbose}" == "true" ]]; then
+    exec env PULSE2MQTT_CONFIG=/tmp/pulse2mqtt/settings.yaml /usr/local/bin/pulse2mqtt -v
+fi
 exec env PULSE2MQTT_CONFIG=/tmp/pulse2mqtt/settings.yaml /usr/local/bin/pulse2mqtt

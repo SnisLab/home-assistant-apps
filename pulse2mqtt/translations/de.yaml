@@ -14,6 +14,9 @@ configuration:
   pulse_version:
     name: Pulse-API-Version
     description: Automatische Erkennung oder die alten bzw. modernen Pulse-API-Endpunkte auswählen.
+  verbose:
+    name: Ausführliche Protokollierung
+    description: Detaillierte Protokollierung zur Fehlersuche aktivieren.
   battery_profile:
     name: Batterieprofil
     description: Kennlinie der zwei eingesetzten AA-Zellen. Geregelte 1,5-V-Akkus werden als 80% oder 0% dargestellt.

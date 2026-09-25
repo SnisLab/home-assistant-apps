@@ -12,7 +12,8 @@ The MQTT integration must be configured in Home Assistant. The official Mosquitt
 - `pulse_username`: HTTP username of the Tibber Pulse.
 - `pulse_password`: HTTP password of the Tibber Pulse.
 - `pulse_node`: Pulse node ID, normally `1`.
-- `pulse_version`: Pulse API version. Leave empty for automatic detection, or use `legacy` or `modern` to select the endpoints explicitly.
+- `pulse_version`: Pulse API version. Use `auto` for automatic detection, or select `legacy` or `modern` explicitly.
+- `verbose`: Enables detailed logging for troubleshooting when set to `true`.
 - `battery_profile`: Voltage curve used for the two installed AA cells. See Battery Level below.
 - `data_topic`: MQTT topic for energy and power readings.
 - `metrics_topic`: MQTT topic for diagnostic readings.
