@@ -11,6 +11,9 @@ configuration:
   pulse_node:
     name: Pulse node
     description: Node ID to read, normally 1.
+  pulse_version:
+    name: Pulse API version
+    description: Select automatic detection, or choose the legacy or modern Pulse API endpoints.
   battery_profile:
     name: Battery profile
     description: Voltage profile of the two installed AA cells. Regulated 1.5 V cells are represented as either 80% or 0%.

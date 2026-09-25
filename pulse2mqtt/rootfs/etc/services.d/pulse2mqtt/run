@@ -7,6 +7,10 @@ pulse_host="$(bashio::config 'pulse_host')"
 pulse_username="$(bashio::config 'pulse_username')"
 pulse_password="$(bashio::config 'pulse_password')"
 pulse_node="$(bashio::config 'pulse_node')"
+pulse_version="$(bashio::config 'pulse_version')"
+if [[ "${pulse_version}" == "auto" ]]; then
+    pulse_version=""
+fi
 battery_profile="$(bashio::config 'battery_profile')"
 data_topic="$(bashio::config 'data_topic')"
 metrics_topic="$(bashio::config 'metrics_topic')"
@@ -43,6 +47,7 @@ jq -n \
     --arg pulse_username "${pulse_username}" \
     --arg pulse_password "${pulse_password}" \
     --argjson pulse_node "${pulse_node}" \
+    --arg pulse_version "${pulse_version}" \
     --arg battery_profile "${battery_profile}" \
     --arg discovery_prefix "${discovery_prefix}" \
     --arg device_id "${device_id}" \
@@ -64,6 +69,7 @@ jq -n \
                 password: $pulse_password,
                 ip: $pulse_host,
                 node: $pulse_node,
+                version: $pulse_version,
                 battery_profile: $battery_profile
             },
             home_assistant: {
