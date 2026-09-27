@@ -2,10 +2,10 @@
   "apps": {
     "pulse2mqtt": {
       "repository": "app-pulse2mqtt",
-      "sha": "1f87143f1d08564356151af2ec2c2e62e77c5fb3",
-      "version": "0.5.5.25",
-      "tag": "v0.5.5.25",
-      "image": "docker.io/dersni/app-pulse2mqtt:0.5.5.25"
+      "sha": "53938285e3398a2d62d5f00267cb5f040dbc77e8",
+      "version": "0.5.6.26",
+      "tag": "v0.5.6.26",
+      "image": "docker.io/dersni/app-pulse2mqtt:0.5.6.26"
     }
   }
 }
